@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // get String from appendStr field
-                outputTextView.append("\n");
+                if (!outputTextView.getText().toString().isEmpty()) {
+                    outputTextView.append("\n");
+                }
                 outputTextView.append(appendStrEditText.getText());
             }
         });
@@ -69,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 blanksSeen[0] += 1;
                 if (blanksSeen[0] > 1) {
-                    outputTextView.append("\n");
+                    if (!outputTextView.getText().toString().isEmpty()) {
+                        outputTextView.append("\n");
+                    }
                     outputTextView.append(mc.fromMorse(symSequence[0]));
                     symSequence[0] = "";
                     blanksSeen[0] = 0;
@@ -86,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     debugTextView.setText("\nAPI GEQ 26 DETECTED");
                     vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
                     vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-                }
-                else {
+                } else {
                     String txtOut = "API < 26 DETECTED";
                     try {
                         long[] pitter = mc.morseFor(outputTextView.getText().toString());
