@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/appendStrEditText"
+        android:layout_width="304dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="String input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
+
+    <Button
+        android:id="@+id/dotBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="120sp"
+        android:height="120sp"
+        android:text="•"
+        android:textSize="56sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/dashBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="120sp"
+        android:height="120sp"
+        android:text="-"
+        android:textSize="56sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/blankBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="120sp"
+        android:height="120sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dashBtn"
+        app:layout_constraintStart_toEndOf="@+id/dotBtn" />
+
+    <TextView
+        android:id="@+id/outputTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:width="300sp"
+        android:height="150sp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/appendStrBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="36dp"
+        android:text="Append"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
+
+    <Button
+        android:id="@+id/playBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="52dp"
+        android:text="Play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Reset"
+        app:layout_constraintEnd_toStartOf="@+id/playBtn"
+        app:layout_constraintStart_toEndOf="@+id/appendStrBtn"
+        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
+
+    <TextView
+        android:id="@+id/debugTextView"
+        android:layout_width="307dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="188dp"
+        android:text="Debugging text will appear here..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
