@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
         Button appendStrBtn = (Button) findViewById(R.id.appendStrBtn);
         Button resetBtn = (Button) findViewById(R.id.resetBtn);
         Button playBtn = (Button) findViewById(R.id.playBtn);
-        Button dotBtn = (Button) findViewById(R.id.dotBtn);
-        Button dashBtn = (Button) findViewById(R.id.dashBtn);
-        Button blankBtn = (Button) findViewById(R.id.blankBtn);
         TextView outputTextView = (TextView) findViewById(R.id.outputTextView);
         TextView debugTextView = (TextView) findViewById(R.id.debugTextView);
         EditText appendStrEditText = (EditText) findViewById(R.id.appendStrEditText);
@@ -50,36 +47,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 outputTextView.setText("");
-            }
-        });
-        dotBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                symSequence[0] += ".";
-                blanksSeen[0] = 0;
-            }
-        });
-        dashBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                symSequence[0] += "-";
-                blanksSeen[0] = 0;
-            }
-        });
-        blankBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                blanksSeen[0] += 1;
-                if (blanksSeen[0] > 1) {
-                    if (!outputTextView.getText().toString().isEmpty()) {
-                        outputTextView.append("\n");
-                    }
-                    outputTextView.append(mc.fromMorse(symSequence[0]));
-                    symSequence[0] = "";
-                    blanksSeen[0] = 0;
-                } else {
-                    symSequence[0] += " ";
-                }
             }
         });
 

@@ -165,4 +165,8 @@ public class MorseCoder {
         }
         return out.toString();
     }
+
+    public String morseLookup(String in){
+        return morseToText.get(in);
+    }
 }

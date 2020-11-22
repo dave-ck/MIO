@@ -18,38 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
 
-    <Button
-        android:id="@+id/dotBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="120sp"
-        android:height="120sp"
-        android:text="•"
-        android:textSize="56sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/dashBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="120sp"
-        android:height="120sp"
-        android:text="-"
-        android:textSize="56sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/blankBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="120sp"
-        android:height="120sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dashBtn"
-        app:layout_constraintStart_toEndOf="@+id/dotBtn" />
-
     <TextView
         android:id="@+id/outputTextView"
         android:layout_width="wrap_content"
