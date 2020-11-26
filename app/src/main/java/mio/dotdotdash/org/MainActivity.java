@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         MorseCoder mc = new MorseCoder();
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
-
+        outputTextView.setText("");
+        outputTextView.append("SOS \\ 100 200 2000 2000 \\");
+        appendStrEditText.setText("");
         appendStrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     String txtOut = "API < 26 DETECTED";
                     try {
-                        long[] pitter = mc.morseFor(outputTextView.getText().toString());
+                        long[] pitter = mc.playableSeq(outputTextView.getText().toString());
                         vibrator.vibrate(pitter, -1);
                     } catch (Exception e) {
                         txtOut += "\nError parsing string to Morse";

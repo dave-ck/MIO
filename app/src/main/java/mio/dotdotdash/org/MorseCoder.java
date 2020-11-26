@@ -1,6 +1,8 @@
 package mio.dotdotdash.org;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class MorseCoder {
 
@@ -16,12 +18,12 @@ public class MorseCoder {
 
     public MorseCoder() {
         // international morseFor code
-        DOT = (long) 100.0;             // dot is one unit (here 100ms)
-        DASH = (long) 300.0;            // dash is 3 units
-        AND = (long) 100.0;             // space between parts of the same letter is one unit
-        LETSEP = (long) 300.0;          // space between letters is three units
-        SPACE_EXTRA = (long) 400.0;     // space character is seven units (four more than the space between characters)
-        ZERO = (long) 0.0;
+        DOT = (long) 100;             // dot is one unit (here 100ms)
+        DASH = (long) 300;            // dash is 3 units
+        AND = (long) 100;             // space between parts of the same letter is one unit
+        LETSEP = (long) 300;          // space between letters is three units
+        SPACE_EXTRA = (long) 400;     // space character is seven units (four more than the space between characters)
+        ZERO = (long) 0;
 
         charVibe = new long[][]{ // time on, time off, time on, ..., time off, time on; always start & end with time ON
                 {DOT, AND, DASH},            // A, AND,  index 0
@@ -105,6 +107,46 @@ public class MorseCoder {
 
     }
 
+    public long[] playableSeq(String in) throws Exception {
+        Scanner sc = new Scanner(in);
+        String next;
+        ArrayList<Long> seq = new ArrayList<>();
+        while (sc.hasNext()) {
+            next = sc.next();
+            if (next.equals("\\")) {
+                // switch to "playback mode" - simply append everything directly
+//                if (sc.hasNextLong())
+//                    sc.nextLong(); // skip the first value - this represents the length of the pause before recording
+                /* above: include this - we need the pause in**/
+                while (sc.hasNextLong()) seq.add(sc.nextLong()); // add all remaining longs
+                // the final pause is replaced, in all cases, with a 500ms pause
+                seq.remove(seq.size()-1);
+                seq.add((long) 500);
+
+            } else {
+                // first, add a SPACE
+                seq.add(SPACE_EXTRA);
+                seq.add(ZERO);
+                // then, add all letters from the current word
+                long[] vibes = morseFor(next);
+                for (long vibe : vibes) {
+                    seq.add(vibe);
+                }
+            }
+        }
+        // construct output
+        long[] out = new long[seq.size()];
+        for (int i = 0; i < seq.size(); i++){
+            out[i] = seq.get(i);  //toArray yields array of Longs (wrapper), need array of longs (primitive)
+        }
+        return out;
+    }
+
+    /**
+     * @param in
+     * @return
+     * @throws Exception
+     */
     public long[] morseFor(String in) throws Exception {
         // compute necessary length for entire code:
         in = in.replace("\n", "  ");
@@ -166,7 +208,7 @@ public class MorseCoder {
         return out.toString();
     }
 
-    public String morseLookup(String in){
+    public String morseLookup(String in) {
         return morseToText.get(in);
     }
 }
