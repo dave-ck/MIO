@@ -6,5 +6,6 @@
     android:layout_alignParentBottom="true"
     android:background="@color/colorPrimary"
     android:keyTextSize="240sp"
+    android:keyTextColor="@color/yellow"
     />
 <!--    android:keyPreviewLayout="@layout/key_preview"-->
