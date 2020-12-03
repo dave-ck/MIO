@@ -142,11 +142,6 @@ public class MorseCoder {
         return out;
     }
 
-    /**
-     * @param in
-     * @return
-     * @throws Exception
-     */
     public long[] morseFor(String in) throws Exception {
         // compute necessary length for entire code:
         in = in.replace("\n", "  ");

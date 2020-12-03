@@ -2,6 +2,8 @@ package mio.dotdotdash.org;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -11,9 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String EXTRA_NORTHUMBRIA = "mio.dotdotdash.org.NORTHUMBRIA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         outputTextView.setText("");
-        outputTextView.append("SOS \\ 100 200 2000 2000 \\");
+        outputTextView.append("AT");
         appendStrEditText.setText("");
         appendStrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +78,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @SuppressLint("SetTextI18n")
+    public void toMorsePracticeActivity(View v){
+        TextView debugTextView = findViewById(R.id.debugTextView);
+        debugTextView.setText("Pressed!");
+        Intent intent = new Intent(this, MorsePracticeActivity.class);
+        EditText editText = (EditText) findViewById(R.id.appendStrEditText);
+        String message = editText.getText().toString();
+        ArrayList<String> script = new ArrayList<>();
+        script.add("CAT");
+        script.add("DOG");
+        script.add("BREAD");
+        script.add("FLOWER");
+        script.add("HELLO");
+        script.add("TREE");
+        script.add("MSG: "+message);
+        intent.putExtra(EXTRA_NORTHUMBRIA, script);
+        startActivity(intent);
 
     }
 }

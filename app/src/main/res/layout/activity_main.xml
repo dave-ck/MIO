@@ -42,6 +42,18 @@
         app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
 
     <Button
+        android:id="@+id/actBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="toMorsePracticeActivity"
+        android:text="Act"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetBtn" />
+
+    <Button
         android:id="@+id/playBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +77,7 @@
         android:id="@+id/debugTextView"
         android:layout_width="301dp"
         android:layout_height="138dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="240dp"
         android:height="120sp"
         android:text="Debugging text will appear here..."
         app:layout_constraintEnd_toEndOf="parent"
