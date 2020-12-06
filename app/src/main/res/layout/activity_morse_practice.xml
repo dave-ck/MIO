@@ -29,7 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30sp"
             android:ems="10"
+            android:imeOptions="actionDone"
             android:inputType="text"
+            android:singleLine="true"
             android:text="Your input here..." />
 
         <TextView

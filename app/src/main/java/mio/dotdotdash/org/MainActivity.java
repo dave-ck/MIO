@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         final String[] symSequence = {""};
         MorseCoder mc = new MorseCoder();
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         outputTextView.setText("");
         outputTextView.append("AT");
         appendStrEditText.setText("");

@@ -42,7 +42,6 @@ public class MorseInputMethodService extends InputMethodService implements Keybo
             now = System.currentTimeMillis();
             if (seqStarted) {
                 long diff = now - last;
-
                 inputConnection.commitText("" + diff + " ", 1);
             } else {
                 seqStarted = true;
