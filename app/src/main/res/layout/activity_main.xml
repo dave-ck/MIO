@@ -24,63 +24,65 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:width="300sp"
-        android:height="80sp"
+        android:height="24sp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/appendStrBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="36dp"
-        android:text="Append"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
-
-    <Button
-        android:id="@+id/actBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
         android:layout_marginTop="20dp"
-        android:onClick="toMorsePracticeActivity"
-        android:text="Act"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resetBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText">
 
-    <Button
-        android:id="@+id/playBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="52dp"
-        android:text="Play"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
+        <Button
+            android:id="@+id/resetBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Reset"
+            android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/resetBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Reset"
-        app:layout_constraintEnd_toStartOf="@+id/playBtn"
-        app:layout_constraintStart_toEndOf="@+id/appendStrBtn"
-        app:layout_constraintTop_toBottomOf="@+id/appendStrEditText" />
+        <Button
+            android:id="@+id/playBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Play"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/appendStrBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Append"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/actBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:onClick="toMorsePracticeActivity"
+            android:text="Train"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="301dp"
         android:layout_height="138dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="20dp"
         android:height="120sp"
         android:text="Debugging text will appear here..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

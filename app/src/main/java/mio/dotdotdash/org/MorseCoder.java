@@ -14,16 +14,18 @@ public class MorseCoder {
     private long LETSEP;
 
     private long[][] charVibe;
+
+    private long[][] jingles;
     private HashMap<String, String> morseToText;
 
     public MorseCoder() {
         // international morseFor code
-        DOT = (long) 100;             // dot is one unit (here 100ms)
-        DASH = (long) 300;            // dash is 3 units
-        AND = (long) 100;             // space between parts of the same letter is one unit
-        LETSEP = (long) 300;          // space between letters is three units
-        SPACE_EXTRA = (long) 400;     // space character is seven units (four more than the space between characters)
-        ZERO = (long) 0;
+        DOT = 100;             // dot is one unit (here 100ms)
+        DASH = 300;            // dash is 3 units
+        AND = 100;             // space between parts of the same letter is one unit
+        LETSEP = 300;          // space between letters is three units
+        SPACE_EXTRA = 400;     // space character is seven units (four more than the space between characters)
+        ZERO = 0;
 
         charVibe = new long[][]{ // time on, time off, time on, ..., time off, time on; always start & end with time ON
                 {DOT, AND, DASH},            // A, AND,  index 0
@@ -63,10 +65,16 @@ public class MorseCoder {
                 {DASH, AND, DASH, AND, DASH, AND, DASH, AND, DOT},      // 9
                 {DASH, AND, DASH, AND, DASH, AND, DASH, AND, DASH},     // 0, AND,  index 35
                 {DOT, AND, DOT, AND, DASH, AND, DOT, AND, DOT},     // accented e: é, AND,  ê, AND,  è, AND,  index 36
-                {ZERO, SPACE_EXTRA, ZERO}                              // Space, index 37
+                {ZERO, SPACE_EXTRA, ZERO},                         // Space, index 37
+                {DOT, AND, DOT, AND, DOT, AND, DOT, AND, DOT, AND, DOT, AND, DOT, AND, DOT} // #, ERROR, index 38
         };
 
-        morseToText = new HashMap<String, String>();
+        jingles = new long[][]{ //playable as standalone, so start with time OFF - 300ms to separate from other outputs
+                {300, 50, 50, 250, 100, 250},            // 0: WRONG - 50ms on, 50ms pause, then 250-100-250 (600 as when deleting, bisected by 100 pause)
+                {300, 75, 75, 75, 75, 75, 75, 75, 75}          // 0: RIGHT - many (4) quick 75ms vibrations
+        };
+
+        morseToText = new HashMap<>();
         morseToText.put("", "");
         morseToText.put(".-", "A");
         morseToText.put("-...", "B");
@@ -104,7 +112,7 @@ public class MorseCoder {
         morseToText.put("---..", "8");
         morseToText.put("----.", "9");
         morseToText.put("-----", "0");
-
+        morseToText.put("........", "#");
     }
 
     public long[] playableSeq(String in) throws Exception {
@@ -120,7 +128,7 @@ public class MorseCoder {
                 /* above: include this - we need the pause in**/
                 while (sc.hasNextLong()) seq.add(sc.nextLong()); // add all remaining longs
                 // the final pause is replaced, in all cases, with a 500ms pause
-                seq.remove(seq.size()-1);
+                seq.remove(seq.size() - 1);
                 seq.add((long) 500);
 
             } else {
@@ -136,7 +144,7 @@ public class MorseCoder {
         }
         // construct output
         long[] out = new long[seq.size()];
-        for (int i = 0; i < seq.size(); i++){
+        for (int i = 0; i < seq.size(); i++) {
             out[i] = seq.get(i);  //toArray yields array of Longs (wrapper), need array of longs (primitive)
         }
         return out;
@@ -182,8 +190,8 @@ public class MorseCoder {
             return charVibe[37];
         } else if (c <= 234 & c >= 232) { // accented e
             return charVibe[36];
-        } else { // other character - treat as punctuation
-            throw new Exception("Character Morse representation nonexistent or not implemented: character " + c);
+        } else { // other character - ERROR code ........ (8 dots) (automatically catches '#' char)
+            return charVibe[38];
         }
 
     }
@@ -194,7 +202,7 @@ public class MorseCoder {
         for (int i = 0; i < in.length(); i++) {
             String sym = in.substring(i, i + 1);
             if (sym.equals(" ")) {
-                out.append(morseToText.get(current.toString()));
+                out.append(morseLookup(current.toString()));
                 current = new StringBuilder();
             } else {
                 current.append(sym);
@@ -204,6 +212,19 @@ public class MorseCoder {
     }
 
     public String morseLookup(String in) {
-        return morseToText.get(in);
+        if (morseToText.containsKey(in)) return morseToText.get(in);
+        else
+            return "#"; // error is 8 dots under ITU M.1677-1 https://www.itu.int/rec/R-REC-M.1677-1-200910-I/
     }
+
+    /**
+     * @param id - the id of the desired jingle:
+     *           0 for WRONG,
+     *           1 for RIGHT/CORRECT
+     * @return A long[] starting with the pause length - can be fed directly to Vibrator.vibrate(long[] pattern, int repeat)
+     */
+    public long[] getJingle(int id) {
+        return jingles[id];
+    }
+
 }

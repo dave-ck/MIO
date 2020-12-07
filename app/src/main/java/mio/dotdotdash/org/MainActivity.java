@@ -87,13 +87,20 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.appendStrEditText);
         String message = editText.getText().toString();
         ArrayList<String> script = new ArrayList<>();
+        script.add("T");
+        script.add("H");
+        script.add("A");
+        script.add("I");
+        script.add("E");
+        script.add("C");
+        script.add("HI");
+        script.add("EAT");
+        script.add("ACE");
+        script.add("HAT");
         script.add("CAT");
-        script.add("DOG");
-        script.add("BREAD");
-        script.add("FLOWER");
-        script.add("HELLO");
-        script.add("TREE");
-        script.add("MSG: "+message);
+        script.add("THAT");
+        script.add("HEAT");
+        script.add("CHAT");
         intent.putExtra(EXTRA_NORTHUMBRIA, script);
         startActivity(intent);
 
