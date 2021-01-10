@@ -126,6 +126,7 @@ public class MorseInputMethodService extends InputMethodService implements Keybo
     public void swipeDown() {
         InputConnection inputConnection = getCurrentInputConnection();
         inputConnection.commitText(" \\ ", 1);
+        vibrator.vibrate((long) 2000);
         // toggle mode
         if (morseMode) {
             morseMode = false;

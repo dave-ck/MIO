@@ -55,25 +55,22 @@ public class MorsePracticeActivity extends AppCompatActivity {
         nextPrompt();
 
 
-        promptTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= 26) {
-                    answerTextView.setText("\nAPI GEQ 26 DETECTED");
-                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-                    vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    String txtOut = "API < 26 DETECTED";
-                    try {
-                        long[] pitter = mc.playableSeq(promptTextView.getText().toString());
-                        vibrator.vibrate(pitter, -1);
-                    } catch (Exception e) {
-                        txtOut += "\nError parsing string to Morse";
-                        txtOut += "\nWith input:\n";
-                        txtOut += answerTextView.getText().toString();
-                        txtOut += e.getMessage();
-                        answerTextView.setText(txtOut);
-                    }
+        promptTextView.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= 26) {
+                answerTextView.setText("\nAPI GEQ 26 DETECTED");
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                String txtOut = "API < 26 DETECTED";
+                try {
+                    long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+                    vibrator.vibrate(pitter, -1);
+                } catch (Exception e) {
+                    txtOut += "\nError parsing string to Morse";
+                    txtOut += "\nWith input:\n";
+                    txtOut += answerTextView.getText().toString();
+                    txtOut += e.getMessage();
+                    answerTextView.setText(txtOut);
                 }
             }
         });

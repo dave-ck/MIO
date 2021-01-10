@@ -73,16 +73,30 @@
             android:onClick="toMorsePracticeActivity"
             android:text="Train"
             android:textSize="12sp" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/logsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="toLogsActivity"
+        android:text="Logs"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="301dp"
         android:layout_height="138dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:height="120sp"
         android:text="Debugging text will appear here..."
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/logsBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

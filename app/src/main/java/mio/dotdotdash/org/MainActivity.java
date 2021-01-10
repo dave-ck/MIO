@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_NORTHUMBRIA = "mio.dotdotdash.org.NORTHUMBRIA";
+    public static final String EXTRA_LOG = "mio.dotdotdash.org.LOG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void toMorsePracticeActivity(View v){
         TextView debugTextView = findViewById(R.id.debugTextView);
-        debugTextView.setText("Pressed!");
         Intent intent = new Intent(this, MorsePracticeActivity.class);
         EditText editText = (EditText) findViewById(R.id.appendStrEditText);
         String message = editText.getText().toString();
@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
         script.add("CHAT");
         intent.putExtra(EXTRA_NORTHUMBRIA, script);
         startActivity(intent);
+    }
 
+    public void toLogsActivity(View view) {
+        Intent intent = new Intent(this, LogsActivity.class);
+        startActivity(intent);
     }
 }

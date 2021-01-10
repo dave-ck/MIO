@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MIO">
-        <activity android:name=".MorsePracticeActivity"
-            android:windowSoftInputMode="stateUnchanged">
-        </activity>
+        <activity android:name=".LogsActivity"></activity>
+        <activity
+            android:name=".MorsePracticeActivity"
+            android:windowSoftInputMode="stateUnchanged"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
