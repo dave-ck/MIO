@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_NORTHUMBRIA = "mio.dotdotdash.org.NORTHUMBRIA";
-    public static final String EXTRA_LOG = "mio.dotdotdash.org.LOG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

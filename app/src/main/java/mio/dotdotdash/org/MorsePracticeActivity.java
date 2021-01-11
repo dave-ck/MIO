@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class MorsePracticeActivity extends AppCompatActivity {
+    public static final String LOGS_FILENAME = "logs.txt";
 
     ArrayList<String> prompts;
     int current;
@@ -48,7 +49,7 @@ public class MorsePracticeActivity extends AppCompatActivity {
         mc = new MorseCoder();
 
         // show keyboard
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         // load in prompt
@@ -56,6 +57,8 @@ public class MorsePracticeActivity extends AppCompatActivity {
 
 
         promptTextView.setOnClickListener(v -> {
+            String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
+            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
             if (Build.VERSION.SDK_INT >= 26) {
                 answerTextView.setText("\nAPI GEQ 26 DETECTED");
                 vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -93,6 +96,8 @@ public class MorsePracticeActivity extends AppCompatActivity {
                 if (s.toString().equals(prompt)) {
                     // correct!
                     answerTextView.setText("Correct!");
+                    String mockEntry = "" + System.currentTimeMillis() + ": finished prompt \"" + prompt + "\" successfully\n";
+                    FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
                     answerTextView.setTextColor(0xFF00FF00);
                     vibrator.vibrate(mc.getJingle(1), -1);
                     current++;
@@ -101,6 +106,8 @@ public class MorsePracticeActivity extends AppCompatActivity {
                     // wrong - nothing good can come of this. Only madness lies this way
                     answerTextView.setTextColor(0xFFFF0000);
                     vibrator.vibrate(mc.getJingle(0), -1);
+                    String mockEntry = "" + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
+                    FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
                 } else if (s.length() == 0) {
                     answerTextView.setTextColor(0xFF000000);
                 }
@@ -112,8 +119,11 @@ public class MorsePracticeActivity extends AppCompatActivity {
     public void nextPrompt() {
         // do bookkeeping for the prompt just completed
         // if there is another prompt
-        if (prompts.size() > current){
+
+        if (prompts.size() > current) {
             String prompt = prompts.get(current);
+            String mockEntry = "" + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
+            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
             promptTextView.setText(prompt);
             typedEditText.setText(null);
         }

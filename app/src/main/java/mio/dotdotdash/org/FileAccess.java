@@ -34,6 +34,31 @@ public class FileAccess {
         return ret;
     }
 
+    public static boolean appendToFile(Context context, String filename, String text) {
+        File path = context.getFilesDir();
+        File file = new File(path, filename);
+        FileOutputStream stream = null;
+        boolean ret = true;
+        try {
+            stream = new FileOutputStream(file, true);
+        } catch (FileNotFoundException e) {
+            ret = false;
+        }
+        try {
+            stream.write(text.getBytes());
+        } catch (IOException e) {
+            ret = false;
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                ret = false;
+            }
+        }
+        return ret;
+    }
+
+    // todo: fix error handling - currently, reading from a non-existing file crashes the app
     public static String readFromFile(Context context, String filename) {
         File path = context.getFilesDir();
         File file = new File(path, filename);
@@ -52,7 +77,7 @@ public class FileAccess {
             err = true;
         } finally {
             try {
-                in.close();
+                if (in != null) in.close();
             } catch (IOException e) {
                 err = true;
             }
