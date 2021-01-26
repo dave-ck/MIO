@@ -35,8 +35,7 @@ public class LogsActivity extends AppCompatActivity {
                     ClipData clip = ClipData.newPlainText("label", logs);
                     clipboard.setPrimaryClip(clip);
 //                    debugTextView.setBackgroundColor(0xFF00FF00);
-                }
-                else { // TODO: Verify that this correctly informs the user when an error has occurred - crash cleanly.
+                } else { // TODO: Verify that this correctly informs the user when an error has occurred - crash cleanly.
                     debugTextView.setText("Error accessing logs");
 //                    debugTextView.setBackgroundColor(0xFFFF0000);
                 }

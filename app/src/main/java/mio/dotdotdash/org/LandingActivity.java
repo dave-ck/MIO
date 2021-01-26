@@ -44,6 +44,14 @@ public class LandingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @SuppressLint("SetTextI18n")
+    public void toPracticeActivity(View v){
+        Intent intent = new Intent(this, PracticeActivity.class);
+        startActivity(intent);
+    }
+
+
+
     public void toLogsActivity(View view) {
         Intent intent = new Intent(this, LogsActivity.class);
         startActivity(intent);

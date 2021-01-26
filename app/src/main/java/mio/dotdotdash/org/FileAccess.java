@@ -1,12 +1,16 @@
 package mio.dotdotdash.org;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class FileAccess {
 
@@ -85,5 +89,27 @@ public class FileAccess {
         String contents = null;
         if (!err) contents = new String(bytes);
         return contents;
+    }
+
+    public static String getStringAsset(Context context, String fname) {
+        AssetManager assetManager = context.getAssets();
+        StringBuffer sb = null;
+        try {
+            InputStream is = assetManager.open(fname);
+            InputStreamReader isReader = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isReader);
+            String str;
+            sb = new StringBuffer();
+            while ((str = reader.readLine()) != null) {
+                sb.append(str);
+                sb.append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (sb == null){
+            return "An error occurred while attempting to load file " + fname;
+        }
+        return sb.toString();
     }
 }
