@@ -8,6 +8,7 @@
     tools:context=".LandingActivity">
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,7 +24,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight=".5"
                 android:onClick="toPracticeActivity"
-                android:text="Practice" />
+                android:text="Words\nPractice"
+                android:textSize="28sp" />
 
             <Button
                 android:id="@+id/redButton"
@@ -33,8 +35,9 @@
                 android:layout_weight=".5"
                 android:inputType="textMultiLine"
                 android:onClick="toMorsePracticeActivity"
-                android:text="Red &#10; Button"
-                app:backgroundTint="@color/red" />
+                android:text="Exercise"
+                android:textSize="28sp"
+                app:backgroundTint="#29BB29" />
 
         </TableRow>
 
@@ -44,23 +47,40 @@
             android:layout_weight=".50">
 
             <Button
-                android:id="@+id/playbackButton"
+                android:id="@+id/abcButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
                 android:layout_weight=".5"
-                android:text="Playback" />
+                android:onClick="toABCPracticeActivity"
+                android:text="ABC\nPractice"
+                android:textSize="28sp" />
 
             <Button
-                android:id="@+id/logsButton"
+                android:id="@+id/playbackButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_weight=".5"
-                android:onClick="toLogsActivity"
-                android:text="Logs" />
+                android:onClick="toPlaybackActivity"
+                android:text="Playback"
+                android:textSize="28sp" />
+
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/logsButton"
+        android:layout_width="115dp"
+        android:layout_height="136dp"
+        android:layout_weight=".5"
+        android:onClick="toLogsActivity"
+        android:text="Logs &amp; Settings"
+        app:backgroundTint="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tableLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

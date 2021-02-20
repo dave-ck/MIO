@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:background="@color/colorPrimary"
+    android:keyBackground="@drawable/black_key_background"
     android:keyTextSize="240sp"
-    android:keyTextColor="@color/yellow"
+    android:keyTextColor="#FFFF00"
+    android:color="#FF00FF"
     />
 <!--    android:keyPreviewLayout="@layout/key_preview"-->

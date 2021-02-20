@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.File;
@@ -22,25 +23,24 @@ public class LogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logs);
 
-        TextView debugTextView = (TextView) findViewById(R.id.debugTextView);
+        Button logsCopyButton = (Button) findViewById(R.id.logCopyButton);
 
-        debugTextView.setOnClickListener(new View.OnClickListener() {
+
+        logsCopyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = getApplicationContext();
                 String logs = FileAccess.readFromFile(context, LOGS_FILENAME);
                 if (logs != null) {
-                    debugTextView.setText(logs);
+                    logsCopyButton.setText("Logs Copied to Clipboard!");
+                    logsCopyButton.setBackgroundColor(0xFF00FF00);
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("label", logs);
                     clipboard.setPrimaryClip(clip);
-//                    debugTextView.setBackgroundColor(0xFF00FF00);
                 } else { // TODO: Verify that this correctly informs the user when an error has occurred - crash cleanly.
-                    debugTextView.setText("Error accessing logs");
-//                    debugTextView.setBackgroundColor(0xFFFF0000);
+                    logsCopyButton.setText("Error accessing logs");
+                    logsCopyButton.setBackgroundColor(0xFFFF0000);
                 }
-
-
             }
         });
 

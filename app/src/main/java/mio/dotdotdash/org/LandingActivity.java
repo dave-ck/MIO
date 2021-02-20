@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,13 +15,26 @@ import java.util.ArrayList;
 
 public class LandingActivity extends AppCompatActivity {
     public static final String EXTRA_NORTHUMBRIA = "mio.dotdotdash.org.NORTHUMBRIA";
+    SharedPreferences prefs = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+        prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstrun", true)) {
+            // Do first run stuff here then set 'firstrun' as false
+            String firstEntry = "@Landing: " + System.currentTimeMillis() + ": logfile created\n";
+            FileAccess.writeToFile(getApplicationContext(), LogsActivity.LOGS_FILENAME, firstEntry);
+            prefs.edit().putBoolean("firstrun", false).apply();
+        }
+    }
 
 
     @SuppressLint("SetTextI18n")
@@ -44,16 +59,23 @@ public class LandingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @SuppressLint("SetTextI18n")
     public void toPracticeActivity(View v){
         Intent intent = new Intent(this, PracticeActivity.class);
         startActivity(intent);
     }
 
-
+    public void toABCPracticeActivity(View view) {
+        Intent intent = new Intent(this, ABCPracticeActivity.class);
+        startActivity(intent);
+    }
 
     public void toLogsActivity(View view) {
         Intent intent = new Intent(this, LogsActivity.class);
+        startActivity(intent);
+    }
+
+    public void toPlaybackActivity(View v){
+        Intent intent = new Intent(this, PlaybackActivity.class);
         startActivity(intent);
     }
 }

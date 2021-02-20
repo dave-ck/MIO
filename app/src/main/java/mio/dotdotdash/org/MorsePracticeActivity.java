@@ -1,25 +1,16 @@
 package mio.dotdotdash.org;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -40,9 +31,9 @@ public class MorsePracticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_morse_practice);
 
         Intent intent = getIntent();
-        prompts = (ArrayList<String>) intent.getSerializableExtra(MainActivity.EXTRA_NORTHUMBRIA);
+        prompts = (ArrayList<String>) intent.getSerializableExtra(LandingActivity.EXTRA_NORTHUMBRIA);
         current = 0;
-        promptTextView = (TextView) findViewById(R.id.promptTextView);
+        promptTextView = (TextView) findViewById(R.id.playbackWordTextView);
         typedEditText = (EditText) findViewById(R.id.typedEditText);
         answerTextView = (TextView) findViewById(R.id.answerTextView);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -59,22 +50,17 @@ public class MorsePracticeActivity extends AppCompatActivity {
         promptTextView.setOnClickListener(v -> {
             String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
             FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-            if (Build.VERSION.SDK_INT >= 26) {
-                answerTextView.setText("\nAPI GEQ 26 DETECTED");
-                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                String txtOut = "API < 26 DETECTED";
-                try {
-                    long[] pitter = mc.playableSeq(promptTextView.getText().toString());
-                    vibrator.vibrate(pitter, -1);
-                } catch (Exception e) {
-                    txtOut += "\nError parsing string to Morse";
-                    txtOut += "\nWith input:\n";
-                    txtOut += answerTextView.getText().toString();
-                    txtOut += e.getMessage();
-                    answerTextView.setText(txtOut);
-                }
+            String txtOut = "API < 26 DETECTED";
+            try {
+                long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+                vibrator.vibrate(pitter, -1);
+            } catch (Exception e) {
+                txtOut += "\nError parsing string to Morse";
+                txtOut += "\nWith input:\n";
+                txtOut += answerTextView.getText().toString();
+                txtOut += e.getMessage();
+                answerTextView.setText(txtOut);
+
             }
         });
 

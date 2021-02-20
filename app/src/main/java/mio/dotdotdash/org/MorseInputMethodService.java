@@ -118,8 +118,8 @@ public class MorseInputMethodService extends InputMethodService implements Keybo
 
     @Override
     public void swipeRight() {
-        InputConnection inputConnection = getCurrentInputConnection();
-        inputConnection.commitText("RIGHT", 1);
+//        InputConnection inputConnection = getCurrentInputConnection();
+//        inputConnection.commitText("RIGHT", 1);
     }
 
     @Override

@@ -11,9 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Random;
-
-public class PracticeActivity extends AppCompatActivity {
+public class ABCPracticeActivity extends AppCompatActivity {
     public static final String LOGS_FILENAME = "logs.txt";
 
     String prompts[];
@@ -23,20 +21,19 @@ public class PracticeActivity extends AppCompatActivity {
     TextView answerTextView;
     Vibrator vibrator;
     MorseCoder mc;
-    Random r;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
-        //Intent intent = getIntent();
         promptTextView = (TextView) findViewById(R.id.playbackWordTextView);
         typedEditText = (EditText) findViewById(R.id.typedEditText);
         answerTextView = (TextView) findViewById(R.id.answerTextView);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        r = new Random();
         mc = new MorseCoder();
-        prompts = FileAccess.getStringAsset(getApplicationContext(), "CKOgden.txt").split("\\r?\\n");
+        // TODO: just get characters from int current - no need for a file to hold the alphabet...
+        prompts = FileAccess.getStringAsset(getApplicationContext(), "ABCs.txt").split("\\r?\\n");
 
         // show keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -49,7 +46,6 @@ public class PracticeActivity extends AppCompatActivity {
         promptTextView.setOnClickListener(v -> {
             String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
             FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-
             String txtOut = "API < 26 DETECTED";
             try {
                 long[] pitter = mc.playableSeq(promptTextView.getText().toString());
@@ -60,8 +56,8 @@ public class PracticeActivity extends AppCompatActivity {
                 txtOut += answerTextView.getText().toString();
                 txtOut += e.getMessage();
                 answerTextView.setText(txtOut);
-
             }
+
         });
 
         typedEditText.addTextChangedListener(new TextWatcher() {
@@ -85,6 +81,7 @@ public class PracticeActivity extends AppCompatActivity {
                     String mockEntry = "@practice: " + System.currentTimeMillis() + ": finished prompt \"" + prompt + "\" successfully\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
                     answerTextView.setTextColor(0xFF00FF00);
+                    // TODO: don't vibrate "correct" - just vibrate next word
                     vibrator.vibrate(mc.getJingle(1), -1);
                     current++;
                     nextPrompt();
@@ -103,15 +100,14 @@ public class PracticeActivity extends AppCompatActivity {
     }
 
     public void nextPrompt() {
-        // do bookkeeping for the prompt just completed
-        // if there is another prompt
-
-        int rand = r.nextInt(prompts.length);
-        String prompt = prompts[rand].toUpperCase();
+        if (current >= 26) {
+            // TODO: signal end of loop reached to user
+            current = 0;
+        }
+        String prompt = prompts[current].toUpperCase();
         String mockEntry = "@practice: " + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         promptTextView.setText(prompt);
         typedEditText.setText(null);
-
     }
 }

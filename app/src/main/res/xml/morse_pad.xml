@@ -10,7 +10,8 @@
             android:keyLabel="∙"/>
         <Key
             android:codes="62"
-            android:keyLabel=" " />
+            android:keyBackground="@drawable/yellow_key_background"
+            android:keyLabel="▫" />
         <Key
             android:codes="69"
             android:keyEdgeFlags="right"
