@@ -48,20 +48,7 @@ public class MorsePracticeActivity extends AppCompatActivity {
 
 
         promptTextView.setOnClickListener(v -> {
-            String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
-            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-            String txtOut = "API < 26 DETECTED";
-            try {
-                long[] pitter = mc.playableSeq(promptTextView.getText().toString());
-                vibrator.vibrate(pitter, -1);
-            } catch (Exception e) {
-                txtOut += "\nError parsing string to Morse";
-                txtOut += "\nWith input:\n";
-                txtOut += answerTextView.getText().toString();
-                txtOut += e.getMessage();
-                answerTextView.setText(txtOut);
-
-            }
+            playPrompt();
         });
 
         typedEditText.addTextChangedListener(new TextWatcher() {
@@ -90,28 +77,42 @@ public class MorsePracticeActivity extends AppCompatActivity {
                     nextPrompt();
                 } else if (!prompt.startsWith(s.toString())) {
                     // wrong - nothing good can come of this. Only madness lies this way
-                    answerTextView.setTextColor(0xFFFF0000);
-                    vibrator.vibrate(mc.getJingle(0), -1);
-                    String mockEntry = "" + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
-                    FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-                } else if (s.length() == 0) {
-                    answerTextView.setTextColor(0xFF000000);
+                    vibrator.vibrate(600);
+                    String logEntry = "" + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
+                    FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
+                    typedEditText.setText("");
                 }
-
             }
         });
+    }
+
+    public void playPrompt() {
+        String prompt = promptTextView.getText().toString();
+        String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
+        FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
+        try {
+            long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+            vibrator.vibrate(pitter, -1);
+        } catch (Exception e) {
+            String txtOut = "@practice" + System.currentTimeMillis() + ": Error parsing string to Morse";
+            txtOut += "\nWith input:\n";
+            txtOut += answerTextView.getText().toString();
+            txtOut += "\n";
+            txtOut += e.getMessage();
+            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, txtOut);
+        }
     }
 
     public void nextPrompt() {
         // do bookkeeping for the prompt just completed
         // if there is another prompt
-
         if (prompts.size() > current) {
             String prompt = prompts.get(current);
             String mockEntry = "" + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
             FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
             promptTextView.setText(prompt);
             typedEditText.setText(null);
+            playPrompt();
         }
     }
 

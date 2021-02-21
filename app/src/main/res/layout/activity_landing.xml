@@ -25,7 +25,7 @@
                 android:layout_weight=".5"
                 android:onClick="toPracticeActivity"
                 android:text="Words\nPractice"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/redButton"
@@ -36,7 +36,7 @@
                 android:inputType="textMultiLine"
                 android:onClick="toMorsePracticeActivity"
                 android:text="Exercise"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 app:backgroundTint="#29BB29" />
 
         </TableRow>
@@ -54,7 +54,7 @@
                 android:layout_weight=".5"
                 android:onClick="toABCPracticeActivity"
                 android:text="ABC\nPractice"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/playbackButton"
@@ -64,7 +64,7 @@
                 android:layout_weight=".5"
                 android:onClick="toPlaybackActivity"
                 android:text="Playback"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
         </TableRow>
 
