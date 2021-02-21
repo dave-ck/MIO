@@ -3,6 +3,7 @@ package mio.dotdotdash.org;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -23,7 +24,10 @@ public class PracticeActivity extends AppCompatActivity {
     TextView answerTextView;
     Vibrator vibrator;
     MorseCoder mc;
+    SharedPreferences prefs;
     Random r;
+    boolean rand_order;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +41,11 @@ public class PracticeActivity extends AppCompatActivity {
         r = new Random();
         mc = new MorseCoder();
         prompts = FileAccess.getStringAsset(getApplicationContext(), "CKOgden.txt").split("\\r?\\n");
-
+        prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
+        rand_order = true;
         // show keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
-        // load in prompt
-        nextPrompt();
-
 
         promptTextView.setOnClickListener(v -> {
             playPrompt();
@@ -85,6 +86,21 @@ public class PracticeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String script;
+        if (prefs.getBoolean("UserScript", false)) { // by default, use the random script
+            script = FileAccess.readFromFile(getApplicationContext(), FileAccess.USERSCRIPT_FILENAME);
+        } else { // if random script, preview some words from CKOgden
+            script = FileAccess.getStringAsset(getApplicationContext(), FileAccess.PRACTICE_WORDLIST_FILENAME);
+        }
+        prompts = script.split("\\r?\\n");
+        index = -1;
+        // load in prompt
+        nextPrompt();
+    }
+
     public void playPrompt(){
         String prompt = promptTextView.getText().toString();
         String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
@@ -103,9 +119,14 @@ public class PracticeActivity extends AppCompatActivity {
     }
 
     public void nextPrompt() {
-        // do bookkeeping for the prompt just completed
-        int rand = r.nextInt(prompts.length);
-        String prompt = prompts[rand].toUpperCase();
+        if (rand_order){
+            index = r.nextInt(prompts.length);
+        }
+        else {
+            index ++;
+            index = index % prompts.length;
+        }
+        String prompt = prompts[index].toUpperCase();
         String mockEntry = "@practice: " + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         promptTextView.setText(prompt);
