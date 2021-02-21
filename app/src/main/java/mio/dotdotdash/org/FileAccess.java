@@ -13,6 +13,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class FileAccess {
+    public static final String USERSCRIPT_FILENAME = "userScript.txt";
+    public static final String PRACTICE_WORDLIST_FILENAME = "CKOgden.txt";
+    public static final String EXERCISE_WORDLIST_FILENAME = "exercise.txt";
+    public static final String ABCS_FILENAME = "ABCs.txt";
+
 
     public static boolean writeToFile(Context context, String filename, String text) {
         File path = context.getFilesDir();

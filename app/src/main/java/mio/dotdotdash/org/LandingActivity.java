@@ -6,10 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,7 +28,7 @@ public class LandingActivity extends AppCompatActivity {
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             String firstEntry = "@Landing: " + System.currentTimeMillis() + ": logfile created\n";
-            FileAccess.writeToFile(getApplicationContext(), LogsActivity.LOGS_FILENAME, firstEntry);
+            FileAccess.writeToFile(getApplicationContext(), SettingsActivity.LOGS_FILENAME, firstEntry);
             prefs.edit().putBoolean("firstrun", false).apply();
         }
     }
@@ -70,7 +67,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     public void toLogsActivity(View view) {
-        Intent intent = new Intent(this, LogsActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
