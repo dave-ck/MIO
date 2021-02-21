@@ -3,6 +3,7 @@ package mio.dotdotdash.org;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -21,7 +22,7 @@ public class PlaybackActivity extends AppCompatActivity {
     TextView answerTextView;
     Vibrator vibrator;
     MorseCoder mc;
-
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +32,27 @@ public class PlaybackActivity extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         mc = new MorseCoder();
         // TODO: implement loading of clipboard script
-        prompts = FileAccess.getStringAsset(getApplicationContext(), "ABCs.txt").split("\\r?\\n");
-        current = 0;
-        // load and play first prompt
-        promptTextView.setText("PLAYBACK");
-        playPrompt();
         // tapping the screen loads and plays the next prompt
         promptTextView.setOnClickListener(v -> {
             nextPrompt();
         });
+        prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String script;
+        if (prefs.getBoolean("UserScript", false)) { // by default, use the random script
+            script = FileAccess.readFromFile(getApplicationContext(), FileAccess.USERSCRIPT_FILENAME);
+        } else { // if random script, preview some words from CKOgden
+            script = FileAccess.getStringAsset(getApplicationContext(), FileAccess.ABCS_FILENAME);
+        }
+        prompts = script.split("\\r?\\n");
+        current = 0;
+        // load in prompt
+        nextPrompt();
     }
 
     public void playPrompt(){
