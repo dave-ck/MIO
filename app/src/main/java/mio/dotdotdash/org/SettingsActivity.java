@@ -9,7 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.yslibrary.android.keyboardvisibilityevent.*;
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.io.File;
 
@@ -21,6 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     Button scriptPasteButton;
     Button scriptResetButton;
     SharedPreferences prefs;
+    EditText testEditTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         logsCopyButton = (Button) findViewById(R.id.logCopyButton);
         scriptTitleTextView = (TextView) findViewById(R.id.scriptTitleTextView);
         scriptPreviewTextView = (TextView) findViewById(R.id.scriptPreviewTextView);
+        testEditTest = (EditText) findViewById(R.id.testEditText);
         scriptPasteButton = (Button) findViewById(R.id.scriptPasteButton);
         prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
 
@@ -62,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
                 FileAccess.writeToFile(context, FileAccess.USERSCRIPT_FILENAME, script); //todo: confirm with user
                 prefs.edit().putBoolean("UserScript", true).apply();
                 updatePreview();
+                testMethod2();
             }
         });
 
@@ -72,15 +80,20 @@ public class SettingsActivity extends AppCompatActivity {
                 scriptPasteButton.setText("Load Script from Clipboard");
                 scriptPasteButton.setBackgroundColor(0xFF6200EE);
                 updatePreview();
+                testMethod1();
             }
         });
-
         String mockEntry = "" + System.currentTimeMillis() + ": accessed logs & settings\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-
         updatePreview();
+    }
 
-
+    public void testMethod1(){
+        UIUtil.hideKeyboard(this);
+        Toast.makeText(this, "Hell there", Toast.LENGTH_LONG).show();
+    }
+    public void testMethod2(){
+        UIUtil.showKeyboard(this, testEditTest);
     }
 
     public void updatePreview() {

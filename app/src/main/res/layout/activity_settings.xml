@@ -52,6 +52,17 @@
             android:layout_marginRight="30dp"
             android:text="APPLE\n" />
 
+        <EditText
+            android:id="@+id/testEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Cheese and Cake and Straw" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
