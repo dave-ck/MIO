@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 public class ABCPracticeActivity extends AppCompatActivity {
     public static final String LOGS_FILENAME = "logs.txt";
@@ -35,9 +39,9 @@ public class ABCPracticeActivity extends AppCompatActivity {
         // TODO: just get characters from int current - no need for a file to hold the alphabet...
         prompts = FileAccess.getStringAsset(getApplicationContext(), "ABCs.txt").split("\\r?\\n");
 
-        // show keyboard
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//        // show keyboard
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         // load in prompt
         nextPrompt();
@@ -97,6 +101,34 @@ public class ABCPracticeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        Toast.makeText(this, "100 Cheeses", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 50ms to work??
+    }
+
+    public void showKeyboard(){
+        UIUtil.showKeyboard(this, typedEditText);
+//        Toast.makeText(this, "Open cheese is best", Toast.LENGTH_SHORT).show();
+    }
+
+    public void hideKeyboard(){
+        UIUtil.hideKeyboard(this);
+
+//        Toast.makeText(this, "Late cheese is better", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        UIUtil.hideKeyboard(this);
+//        Toast.makeText(this, "WHY GOD? BECAUSE.", Toast.LENGTH_SHORT).show();
+//
+//    }
+
     public void playPrompt(){
         String prompt = promptTextView.getText().toString();
         String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
@@ -127,4 +159,6 @@ public class ABCPracticeActivity extends AppCompatActivity {
         playPrompt();
 
     }
+
+
 }

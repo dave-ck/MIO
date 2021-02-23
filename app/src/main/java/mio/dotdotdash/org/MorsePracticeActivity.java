@@ -28,7 +28,7 @@ public class MorsePracticeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_morse_practice);
+        setContentView(R.layout.activity_practice);
 
         Intent intent = getIntent();
         prompts = (ArrayList<String>) intent.getSerializableExtra(LandingActivity.EXTRA_NORTHUMBRIA);
