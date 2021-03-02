@@ -3,11 +3,13 @@ package mio.dotdotdash.org;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,20 +50,39 @@ public class ABCPracticeActivity extends AppCompatActivity {
 
 
         promptTextView.setOnClickListener(v -> {
-            String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
-            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-            String txtOut = "API < 26 DETECTED";
-            try {
-                long[] pitter = mc.playableSeq(promptTextView.getText().toString());
-                vibrator.vibrate(pitter, -1);
-            } catch (Exception e) {
-                txtOut += "\nError parsing string to Morse";
-                txtOut += "\nWith input:\n";
-                txtOut += answerTextView.getText().toString();
-                txtOut += e.getMessage();
-                answerTextView.setText(txtOut);
-            }
 
+        });
+
+        Context ctx = this.getApplicationContext();
+        promptTextView.setOnTouchListener(new OnSwipeTouchListener(ctx) {
+            //            public void onSwipeTop() {
+//                Toast.makeText(ctx, "top", Toast.LENGTH_SHORT).show();
+//            }
+            public void onSwipeRight() {
+                toLandingActivity();
+            }
+//            public void onSwipeLeft() {
+//                Toast.makeText(ctx, "left", Toast.LENGTH_SHORT).show();
+//            }
+//            public void onSwipeBottom() {
+//                Toast.makeText(ctx, "bottom", Toast.LENGTH_SHORT).show();
+//            }
+
+            public void onTap() {
+                String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
+                FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
+                String txtOut = "API < 26 DETECTED";
+                try {
+                    long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+                    vibrator.vibrate(pitter, -1);
+                } catch (Exception e) {
+                    txtOut += "\nError parsing string to Morse";
+                    txtOut += "\nWith input:\n";
+                    txtOut += answerTextView.getText().toString();
+                    txtOut += e.getMessage();
+                    answerTextView.setText(txtOut);
+                }
+            }
         });
 
         typedEditText.addTextChangedListener(new TextWatcher() {
@@ -158,6 +179,11 @@ public class ABCPracticeActivity extends AppCompatActivity {
         typedEditText.setText(null);
         playPrompt();
 
+    }
+
+    public void toLandingActivity(){
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 
 

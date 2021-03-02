@@ -1,16 +1,26 @@
 package mio.dotdotdash.org;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.view.MotionEventCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.Random;
 
@@ -28,6 +38,7 @@ public class PracticeActivity extends AppCompatActivity {
     Random r;
     boolean rand_order;
     int index;
+    float x1, y1, x2, y2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +54,25 @@ public class PracticeActivity extends AppCompatActivity {
         prompts = FileAccess.getStringAsset(getApplicationContext(), "CKOgden.txt").split("\\r?\\n");
         prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
         rand_order = true;
-        // show keyboard
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-        promptTextView.setOnClickListener(v -> {
-            playPrompt();
+        Context ctx = this.getApplicationContext();
+        promptTextView.setOnTouchListener(new OnSwipeTouchListener(ctx) {
+//            public void onSwipeTop() {
+//                Toast.makeText(ctx, "top", Toast.LENGTH_SHORT).show();
+//            }
+            public void onSwipeRight() {
+                toLandingActivity();
+            }
+
+            public void onTap() {
+                playPrompt();
+            }
+//            public void onSwipeLeft() {
+//                Toast.makeText(ctx, "left", Toast.LENGTH_SHORT).show();
+//            }
+//            public void onSwipeBottom() {
+//                Toast.makeText(ctx, "bottom", Toast.LENGTH_SHORT).show();
+//            }
         });
 
         typedEditText.addTextChangedListener(new TextWatcher() {
@@ -86,6 +110,16 @@ public class PracticeActivity extends AppCompatActivity {
         });
     }
 
+    public void toLandingActivity(){
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
+    }
+
+    public void showKeyboard() {
+        UIUtil.showKeyboard(this, typedEditText);
+//        Toast.makeText(this, "Open cheese is best", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -99,9 +133,11 @@ public class PracticeActivity extends AppCompatActivity {
         index = -1;
         // load in prompt
         nextPrompt();
+        new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 50ms to work??
+
     }
 
-    public void playPrompt(){
+    public void playPrompt() {
         String prompt = promptTextView.getText().toString();
         String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
@@ -109,7 +145,7 @@ public class PracticeActivity extends AppCompatActivity {
             long[] pitter = mc.playableSeq(promptTextView.getText().toString());
             vibrator.vibrate(pitter, -1);
         } catch (Exception e) {
-            String txtOut = "@practice" + System.currentTimeMillis() +": Error parsing string to Morse";
+            String txtOut = "@practice" + System.currentTimeMillis() + ": Error parsing string to Morse";
             txtOut += "\nWith input:\n";
             txtOut += answerTextView.getText().toString();
             txtOut += "\n";
@@ -119,11 +155,10 @@ public class PracticeActivity extends AppCompatActivity {
     }
 
     public void nextPrompt() {
-        if (rand_order){
+        if (rand_order) {
             index = r.nextInt(prompts.length);
-        }
-        else {
-            index ++;
+        } else {
+            index++;
             index = index % prompts.length;
         }
         String prompt = prompts[index].toUpperCase();
@@ -133,4 +168,6 @@ public class PracticeActivity extends AppCompatActivity {
         typedEditText.setText(null);
         playPrompt();
     }
+
+
 }

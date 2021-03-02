@@ -3,6 +3,7 @@ package mio.dotdotdash.org;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlaybackActivity extends AppCompatActivity {
     public static final String LOGS_FILENAME = "logs.txt";
@@ -33,9 +35,25 @@ public class PlaybackActivity extends AppCompatActivity {
         mc = new MorseCoder();
         // TODO: implement loading of clipboard script
         // tapping the screen loads and plays the next prompt
-        promptTextView.setOnClickListener(v -> {
-            nextPrompt();
+        Context ctx = this.getApplicationContext();
+        promptTextView.setOnTouchListener(new OnSwipeTouchListener(ctx) {
+            //            public void onSwipeTop() {
+//                Toast.makeText(ctx, "top", Toast.LENGTH_SHORT).show();
+//            }
+            public void onSwipeRight() {
+                toLandingActivity();
+            }
+            public void onTap(){
+                nextPrompt();
+            }
+//            public void onSwipeLeft() {
+//                Toast.makeText(ctx, "left", Toast.LENGTH_SHORT).show();
+//            }
+//            public void onSwipeBottom() {
+//                Toast.makeText(ctx, "bottom", Toast.LENGTH_SHORT).show();
+//            }
         });
+
         prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
 
     }
@@ -80,5 +98,10 @@ public class PlaybackActivity extends AppCompatActivity {
         String mockEntry = "@playback: " + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         current ++;
+    }
+
+    public void toLandingActivity(){
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 }

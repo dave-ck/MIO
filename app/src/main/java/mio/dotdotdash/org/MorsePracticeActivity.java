@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.ArrayList;
 
@@ -39,16 +43,28 @@ public class MorsePracticeActivity extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         mc = new MorseCoder();
 
-        // show keyboard
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
         // load in prompt
         nextPrompt();
 
 
-        promptTextView.setOnClickListener(v -> {
-            playPrompt();
+        Context ctx = this.getApplicationContext();
+        promptTextView.setOnTouchListener(new OnSwipeTouchListener(ctx) {
+            //            public void onSwipeTop() {
+//                Toast.makeText(ctx, "top", Toast.LENGTH_SHORT).show();
+//            }
+            public void onSwipeRight() {
+                toLandingActivity();
+            }
+
+            public void onTap() {
+                playPrompt();
+            }
+//            public void onSwipeLeft() {
+//                Toast.makeText(ctx, "left", Toast.LENGTH_SHORT).show();
+//            }
+//            public void onSwipeBottom() {
+//                Toast.makeText(ctx, "bottom", Toast.LENGTH_SHORT).show();
+//            }
         });
 
         typedEditText.addTextChangedListener(new TextWatcher() {
@@ -86,6 +102,18 @@ public class MorsePracticeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        Toast.makeText(this, "100 Cheeses", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 50ms to work??
+    }
+
+    public void showKeyboard() {
+        UIUtil.showKeyboard(this, typedEditText);
+//        Toast.makeText(this, "Open cheese is best", Toast.LENGTH_SHORT).show();
+    }
+
     public void playPrompt() {
         String prompt = promptTextView.getText().toString();
         String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
@@ -114,6 +142,11 @@ public class MorsePracticeActivity extends AppCompatActivity {
             typedEditText.setText(null);
             playPrompt();
         }
+    }
+
+    public void toLandingActivity() {
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 
 }
