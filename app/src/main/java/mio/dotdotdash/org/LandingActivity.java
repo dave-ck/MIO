@@ -25,13 +25,13 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (prefs.getBoolean("firstrun", true)) {
-            // Do first run stuff here then set 'firstrun' as false
-            String firstEntry = "@Landing: " + System.currentTimeMillis() + ": logfile created\n";
-            FileAccess.writeToFile(getApplicationContext(), SettingsActivity.LOGS_FILENAME, firstEntry);
-            prefs.edit().putBoolean("firstrun", false).apply();
-        }
+// below: uncomment for debugging logs; leave commented for prod
+//        if (prefs.getBoolean("firstrun", true)) {
+//            // Do first run stuff here then set 'firstrun' as false
+//            String firstEntry = "@Landing: " + System.currentTimeMillis() + ": logfile created\n";
+//            FileAccess.writeToFile(getApplicationContext(), SettingsActivity.LOGS_FILENAME, firstEntry);
+//            prefs.edit().putBoolean("firstrun", false).apply();
+//        }
 
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         MorseCoder mc = new MorseCoder();
