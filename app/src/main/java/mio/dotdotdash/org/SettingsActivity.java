@@ -83,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
                 testMethod1();
             }
         });
-        String mockEntry = "" + System.currentTimeMillis() + ": accessed logs & settings\n";
+        String mockEntry = "@settings: " + System.currentTimeMillis() + ": accessed logs & settings\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         updatePreview();
     }

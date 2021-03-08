@@ -43,7 +43,8 @@ public class PlaybackActivity extends AppCompatActivity {
             public void onSwipeRight() {
                 toLandingActivity();
             }
-            public void onTap(){
+
+            public void onTap() {
                 nextPrompt();
             }
 //            public void onSwipeLeft() {
@@ -73,19 +74,11 @@ public class PlaybackActivity extends AppCompatActivity {
         nextPrompt();
     }
 
-    public void playPrompt(){
-        try {
-            long[] pitter = mc.playableSeq(promptTextView.getText().toString());
-            vibrator.vibrate(pitter, -1);
-            String mockEntry = "" + System.currentTimeMillis() + ": played prompt";
-            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-        } catch (Exception e) {
-            String txtOut = "Error parsing string to Morse";
-            txtOut += "\nWith input:\n";
-            txtOut += answerTextView.getText().toString();
-            txtOut += e.getMessage();
-            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, txtOut);
-        }
+    public void playPrompt() {
+
+        long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+        vibrator.vibrate(pitter, -1);
+
     }
 
     public void nextPrompt() {
@@ -94,13 +87,13 @@ public class PlaybackActivity extends AppCompatActivity {
         }
         String prompt = prompts[current].toUpperCase();
         promptTextView.setText(prompt);
+        String mockEntry = "@playback: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
         playPrompt();
-        String mockEntry = "@playback: " + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
-        current ++;
+        current++;
     }
 
-    public void toLandingActivity(){
+    public void toLandingActivity() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);
     }

@@ -38,7 +38,6 @@ public class PracticeActivity extends AppCompatActivity {
     Random r;
     boolean rand_order;
     int index;
-    float x1, y1, x2, y2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +101,7 @@ public class PracticeActivity extends AppCompatActivity {
                 } else if (!prompt.startsWith(s.toString())) {
                     // wrong - nothing good can come of this. Only madness lies this way
                     vibrator.vibrate(600);
-                    String logEntry = "" + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
+                    String logEntry =  "@practice: " + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
                     typedEditText.setText("");
                 }

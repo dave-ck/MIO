@@ -103,7 +103,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
                 if (s.toString().equals(prompt)) {
                     // correct!
                     answerTextView.setText("Correct!");
-                    String mockEntry = "@practice: " + System.currentTimeMillis() + ": finished prompt \"" + prompt + "\" successfully\n";
+                    String mockEntry = "@ABCpractice: " + System.currentTimeMillis() + ": finished prompt \"" + prompt + "\" successfully\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
                     answerTextView.setTextColor(0xFF00FF00);
                     // TODO: don't vibrate "correct" - just vibrate next word
@@ -113,7 +113,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
                 } else if (!prompt.startsWith(s.toString())) {
                     // wrong - nothing good can come of this. Only madness lies this way
                     vibrator.vibrate(600);
-                    String logEntry = "" + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
+                    String logEntry = "@ABCpractice: " + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
                     typedEditText.setText("");
                 }
@@ -125,46 +125,26 @@ public class ABCPracticeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        Toast.makeText(this, "100 Cheeses", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 50ms to work??
+        new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 100ms to work??
     }
 
-    public void showKeyboard(){
+    public void showKeyboard() {
         UIUtil.showKeyboard(this, typedEditText);
-//        Toast.makeText(this, "Open cheese is best", Toast.LENGTH_SHORT).show();
     }
 
-    public void hideKeyboard(){
+    public void hideKeyboard() {
         UIUtil.hideKeyboard(this);
-
-//        Toast.makeText(this, "Late cheese is better", Toast.LENGTH_SHORT).show();
     }
 
 
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        UIUtil.hideKeyboard(this);
-//        Toast.makeText(this, "WHY GOD? BECAUSE.", Toast.LENGTH_SHORT).show();
-//
-//    }
-
-    public void playPrompt(){
+    public void playPrompt() {
         String prompt = promptTextView.getText().toString();
-        String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
+        String logEntry = "@ABCpractice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
-        try {
-            long[] pitter = mc.playableSeq(promptTextView.getText().toString());
-            vibrator.vibrate(pitter, -1);
-        } catch (Exception e) {
-            String txtOut = "@practice" + System.currentTimeMillis() +": Error parsing string to Morse";
-            txtOut += "\nWith input:\n";
-            txtOut += answerTextView.getText().toString();
-            txtOut += "\n";
-            txtOut += e.getMessage();
-            FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, txtOut);
-        }
+        long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+        vibrator.vibrate(pitter, -1);
+
     }
 
     public void nextPrompt() {
@@ -173,7 +153,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
             current = 0;
         }
         String prompt = prompts[current].toUpperCase();
-        String mockEntry = "@practice: " + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
+        String mockEntry = "@ABCpractice: " + System.currentTimeMillis() + ": began prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         promptTextView.setText(prompt);
         typedEditText.setText(null);
@@ -181,7 +161,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
 
     }
 
-    public void toLandingActivity(){
+    public void toLandingActivity() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);
     }
