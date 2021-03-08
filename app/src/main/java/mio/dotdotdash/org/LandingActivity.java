@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -31,11 +32,15 @@ public class LandingActivity extends AppCompatActivity {
             FileAccess.writeToFile(getApplicationContext(), SettingsActivity.LOGS_FILENAME, firstEntry);
             prefs.edit().putBoolean("firstrun", false).apply();
         }
+
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        MorseCoder mc = new MorseCoder();
+        vibrator.vibrate(mc.playableSeq("MIO"), -1);
     }
 
 
     @SuppressLint("SetTextI18n")
-    public void toMorsePracticeActivity(View v){
+    public void toMorsePracticeActivity(View v) {
         Intent intent = new Intent(this, MorsePracticeActivity.class);
         ArrayList<String> script = new ArrayList<>();
         script.add("T");
@@ -56,7 +61,7 @@ public class LandingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void toPracticeActivity(View v){
+    public void toPracticeActivity(View v) {
         Intent intent = new Intent(this, PracticeActivity.class);
         startActivity(intent);
     }
@@ -71,7 +76,7 @@ public class LandingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void toPlaybackActivity(View v){
+    public void toPlaybackActivity(View v) {
         Intent intent = new Intent(this, PlaybackActivity.class);
         startActivity(intent);
     }

@@ -115,10 +115,11 @@ public class MorseCoder {
         morseToText.put("........", "#");
     }
 
-    public long[] playableSeq(String in) throws Exception {
+    public long[] playableSeq(String in) {
         Scanner sc = new Scanner(in);
         String next;
         ArrayList<Long> seq = new ArrayList<>();
+        boolean err = false; // flag to check if exception was raised
         while (sc.hasNext()) {
             next = sc.next();
             if (next.equals("\\")) {
@@ -148,9 +149,10 @@ public class MorseCoder {
             out[i] = seq.get(i);  //toArray yields array of Longs (wrapper), need array of longs (primitive)
         }
         return out;
+
     }
 
-    public long[] morseFor(String in) throws Exception {
+    public long[] morseFor(String in) {
         // compute necessary length for entire code:
         in = in.replace("\n", "  ");
         int outLen = 0;
@@ -179,7 +181,7 @@ public class MorseCoder {
         return out;
     }
 
-    public long[] morseFromChar(char c) throws Exception {
+    public long[] morseFromChar(char c) {
         if (c <= 123 & c >= 97) { // lowercase letter
             return charVibe[(c - 97)];
         } else if (c <= 90 & c >= 65) { // upper letter
