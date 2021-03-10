@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
     Button scriptPasteButton;
     Button scriptResetButton;
     SharedPreferences prefs;
-    EditText testEditTest;
+    boolean logsCopied;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +37,27 @@ public class SettingsActivity extends AppCompatActivity {
         logsCopyButton = (Button) findViewById(R.id.logCopyButton);
         scriptTitleTextView = (TextView) findViewById(R.id.scriptTitleTextView);
         scriptPreviewTextView = (TextView) findViewById(R.id.scriptPreviewTextView);
-        testEditTest = (EditText) findViewById(R.id.testEditText);
         scriptPasteButton = (Button) findViewById(R.id.scriptPasteButton);
         prefs = getSharedPreferences("org.dotdotdash.mio", MODE_PRIVATE);
+        logsCopied = false;
 
+        Context t = this;
         logsCopyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (logsCopied) {
+                    Intent intent = new Intent(t, LandingActivity.class);
+                    startActivity(intent);
+                }
                 Context context = getApplicationContext();
                 String logs = FileAccess.readFromFile(context, LOGS_FILENAME);
                 if (logs != null) {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("label", logs);
                     clipboard.setPrimaryClip(clip);
-                    logsCopyButton.setText("Logs Copied to Clipboard!");
+                    logsCopyButton.setText("Logs Copied to Clipboard! Return to main?");
                     logsCopyButton.setBackgroundColor(0xFF00FF00);
+                    logsCopied = true;
                 } else { // TODO: Verify that this correctly informs the user when an error has occurred - crash cleanly.
                     logsCopyButton.setText("Error accessing logs");
                     logsCopyButton.setBackgroundColor(0xFFFF0000);
@@ -69,7 +76,6 @@ public class SettingsActivity extends AppCompatActivity {
                 FileAccess.writeToFile(context, FileAccess.USERSCRIPT_FILENAME, script); //todo: confirm with user
                 prefs.edit().putBoolean("UserScript", true).apply();
                 updatePreview();
-                testMethod2();
             }
         });
 
@@ -80,20 +86,11 @@ public class SettingsActivity extends AppCompatActivity {
                 scriptPasteButton.setText("Load Script from Clipboard");
                 scriptPasteButton.setBackgroundColor(0xFF6200EE);
                 updatePreview();
-                testMethod1();
             }
         });
         String mockEntry = "@settings: " + System.currentTimeMillis() + ": accessed logs & settings\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         updatePreview();
-    }
-
-    public void testMethod1(){
-        UIUtil.hideKeyboard(this);
-        Toast.makeText(this, "Hell there", Toast.LENGTH_LONG).show();
-    }
-    public void testMethod2(){
-        UIUtil.showKeyboard(this, testEditTest);
     }
 
     public void updatePreview() {
