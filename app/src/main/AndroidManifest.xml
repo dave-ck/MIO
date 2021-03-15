@@ -14,11 +14,16 @@
         <activity android:name=".PlaybackActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ABCPracticeActivity"
-            android:windowSoftInputMode="stateUnchanged"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
         <activity android:name=".PracticeActivity"
-            android:windowSoftInputMode="stateUnchanged"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".MorsePracticeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".LandingActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,10 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity" />
-        <activity
-            android:name=".MorsePracticeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateUnchanged" />
+
 
         <service
             android:name=".MorseInputMethodService"
