@@ -8,50 +8,64 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="100"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/scriptPasteButton"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Load Script from Clipboard" />
-
-        <Button
-            android:id="@+id/scriptResetButton"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Reset Script to Default" />
-
-        <TextView
-            android:id="@+id/scriptTitleTextView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:text="Current script reads:" />
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/scriptPreviewTextView"
+            <Button
+                android:id="@+id/logCopyButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:text="Copy Logs to Clipboard" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:maxLines="4"
-            android:text="APPLE\n" />
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/logCopyButton"
-            android:layout_width="280dp"
-            android:layout_height="285dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Copy Logs to Clipboard" />
+            <Button
+                android:id="@+id/scriptPasteButton"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Load Script from Clipboard" />
+
+            <Button
+                android:id="@+id/scriptResetButton"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Reset Script to Default" />
+
+            <TextView
+                android:id="@+id/scriptTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="Current script reads:" />
+
+            <TextView
+                android:id="@+id/scriptPreviewTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:maxLines="4"
+                android:text="APPLE\n" />
+        </LinearLayout>
 
     </LinearLayout>
 
