@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,6 +92,14 @@ public class SettingsActivity extends AppCompatActivity {
         String mockEntry = "@settings: " + System.currentTimeMillis() + ": accessed logs & settings\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
         updatePreview();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        MorseCoder mc = new MorseCoder();
+        vibrator.vibrate(mc.playableSeq("SET"), -1);
     }
 
     public void updatePreview() {

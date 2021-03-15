@@ -10,7 +10,8 @@
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
         <TableRow
             android:layout_width="match_parent"
@@ -72,9 +73,8 @@
 
     <Button
         android:id="@+id/logsButton"
-        android:layout_width="115dp"
-        android:layout_height="136dp"
-        android:layout_weight=".5"
+        android:layout_width="134dp"
+        android:layout_height="162dp"
         android:onClick="toLogsActivity"
         android:text="Logs &amp; Settings"
         app:backgroundTint="@color/red"
