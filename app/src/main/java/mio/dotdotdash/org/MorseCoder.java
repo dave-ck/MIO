@@ -20,11 +20,11 @@ public class MorseCoder {
 
     public MorseCoder() {
         // international morseFor code
-        DOT = 100;             // dot is one unit (here 100ms)
-        DASH = 300;            // dash is 3 units
-        AND = 100;             // space between parts of the same letter is one unit
-        LETSEP = 300;          // space between letters is three units
-        SPACE_EXTRA = 400;     // space character is seven units (four more than the space between characters)
+        DOT = 200;             // dot is one unit (here 100ms)
+        DASH = 600;            // dash is 3 units
+        AND = 200;             // space between parts of the same letter is one unit
+        LETSEP = 600;          // space between letters is three units
+        SPACE_EXTRA = 800;     // space character is seven units (four more than the space between characters)
         ZERO = 0;
 
         charVibe = new long[][]{ // time on, time off, time on, ..., time off, time on; always start & end with time ON

@@ -82,15 +82,15 @@ public class MorseInputMethodService extends InputMethodService implements Keybo
             }
             switch (primaryCode) {
                 case (56): // dot
-                    vibrator.vibrate((long) 100);
+                    vibrator.vibrate((long) 200);
                     symSequence += ".";
                     break;
                 case (69): // dash
-                    vibrator.vibrate((long) 300);
+                    vibrator.vibrate((long) 600);
                     symSequence += "-";
                     break;
                 case (62): // space
-                    vibrator.vibrate((long) 30);
+                    vibrator.vibrate((long) 100);
                     blanksSeen += 1;
                     String next = mc.morseLookup(symSequence);
                     inputConnection.commitText(next, 1);
@@ -111,7 +111,7 @@ public class MorseInputMethodService extends InputMethodService implements Keybo
         InputConnection inputConnection = getCurrentInputConnection();
         inputConnection.deleteSurroundingText(Character.MAX_CODE_POINT, 0);
         symSequence = "";
-        vibrator.vibrate((long) 600);
+        vibrator.vibrate((long) 1200);
         morseMode = true;
 
     }

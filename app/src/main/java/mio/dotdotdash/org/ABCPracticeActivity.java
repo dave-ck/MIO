@@ -112,7 +112,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
                     nextPrompt();
                 } else if (!prompt.startsWith(s.toString())) {
                     // wrong - nothing good can come of this. Only madness lies this way
-                    vibrator.vibrate(600);
+                    vibrator.vibrate(1200);
                     String logEntry = "@ABCpractice: " + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
                     typedEditText.setText("");
