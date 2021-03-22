@@ -43,10 +43,6 @@ public class MorsePracticeActivity extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         mc = new MorseCoder();
 
-        // load in prompt
-        nextPrompt();
-
-
         Context ctx = this.getApplicationContext();
         promptTextView.setOnTouchListener(new OnSwipeTouchListener(ctx) {
             //            public void onSwipeTop() {
@@ -105,7 +101,9 @@ public class MorsePracticeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        Toast.makeText(this, "100 Cheeses", Toast.LENGTH_SHORT).show();
+        vibrator.vibrate(new long[] {100, 400, 100, 400}, -1);
+        // load in prompt
+        new Handler().postDelayed(() -> nextPrompt(), 1000);
         new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 50ms to work??
     }
 

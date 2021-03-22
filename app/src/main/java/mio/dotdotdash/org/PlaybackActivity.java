@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -71,7 +72,9 @@ public class PlaybackActivity extends AppCompatActivity {
         prompts = script.split("\\r?\\n");
         current = 0;
         // load in prompt
-        nextPrompt();
+        vibrator.vibrate(new long[]{100, 400, 100, 400, 100, 400, 100, 400}, -1);
+        // load in prompt
+        new Handler().postDelayed(() -> nextPrompt(), 2000);
     }
 
     public void playPrompt() {

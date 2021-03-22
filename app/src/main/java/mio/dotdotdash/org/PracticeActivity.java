@@ -56,7 +56,7 @@ public class PracticeActivity extends AppCompatActivity {
 
         Context ctx = this.getApplicationContext();
         promptTextView.setOnTouchListener(new OnSwipeTouchListener(ctx) {
-//            public void onSwipeTop() {
+            //            public void onSwipeTop() {
 //                Toast.makeText(ctx, "top", Toast.LENGTH_SHORT).show();
 //            }
             public void onSwipeRight() {
@@ -101,7 +101,7 @@ public class PracticeActivity extends AppCompatActivity {
                 } else if (!prompt.startsWith(s.toString())) {
                     // wrong - nothing good can come of this. Only madness lies this way
                     vibrator.vibrate(1200);
-                    String logEntry =  "@practice: " + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
+                    String logEntry = "@practice: " + System.currentTimeMillis() + ": failed prompt \"" + prompt + "\" with string \"" + s + "\"\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
                     typedEditText.setText("");
                 }
@@ -109,7 +109,7 @@ public class PracticeActivity extends AppCompatActivity {
         });
     }
 
-    public void toLandingActivity(){
+    public void toLandingActivity() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);
     }
@@ -130,8 +130,9 @@ public class PracticeActivity extends AppCompatActivity {
         }
         prompts = script.split("\\r?\\n");
         index = -1;
+        vibrator.vibrate(new long[] {100, 400}, -1);
         // load in prompt
-        nextPrompt();
+        new Handler().postDelayed(() -> nextPrompt(), 500);
         new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 50ms to work??
 
     }
@@ -152,6 +153,7 @@ public class PracticeActivity extends AppCompatActivity {
             FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, txtOut);
         }
     }
+
 
     public void nextPrompt() {
         if (rand_order) {

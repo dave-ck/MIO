@@ -40,15 +40,6 @@ public class ABCPracticeActivity extends AppCompatActivity {
         mc = new MorseCoder();
         // TODO: just get characters from int current - no need for a file to hold the alphabet...
         prompts = FileAccess.getStringAsset(getApplicationContext(), "ABCs.txt").split("\\r?\\n");
-
-//        // show keyboard
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
-        // load in prompt
-        nextPrompt();
-
-
         promptTextView.setOnClickListener(v -> {
 
         });
@@ -125,6 +116,9 @@ public class ABCPracticeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        vibrator.vibrate(new long[] {100, 400, 100, 400, 100, 400}, -1);
+        // load in prompt
+        new Handler().postDelayed(() -> nextPrompt(), 1500);
         new Handler().postDelayed(() -> showKeyboard(), 100); //why does this have to be delayed 100ms to work??
     }
 
