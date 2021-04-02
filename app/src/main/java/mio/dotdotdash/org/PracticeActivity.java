@@ -125,6 +125,7 @@ public class PracticeActivity extends AppCompatActivity {
         String script;
         if (prefs.getBoolean("UserScript", false)) { // by default, use the random script
             script = FileAccess.readFromFile(getApplicationContext(), FileAccess.USERSCRIPT_FILENAME);
+            rand_order = false;
         } else { // if random script, preview some words from CKOgden
             script = FileAccess.getStringAsset(getApplicationContext(), FileAccess.PRACTICE_WORDLIST_FILENAME);
         }
