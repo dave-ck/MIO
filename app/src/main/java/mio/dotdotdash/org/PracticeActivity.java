@@ -143,7 +143,7 @@ public class PracticeActivity extends AppCompatActivity {
         String logEntry = "@practice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
         try {
-            long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+            long[] pitter = mc.playableSeq(promptTextView.getText().toString().substring(typedEditText.getText().length()));
             vibrator.vibrate(pitter, -1);
         } catch (Exception e) {
             String txtOut = "@practice" + System.currentTimeMillis() + ": Error parsing string to Morse";

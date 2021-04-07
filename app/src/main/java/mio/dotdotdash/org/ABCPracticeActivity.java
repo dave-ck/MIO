@@ -136,7 +136,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
         String prompt = promptTextView.getText().toString();
         String logEntry = "@ABCpractice: " + System.currentTimeMillis() + ": played prompt \"" + prompt + "\"\n";
         FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, logEntry);
-        long[] pitter = mc.playableSeq(promptTextView.getText().toString());
+        long[] pitter = mc.playableSeq(promptTextView.getText().toString().substring(typedEditText.getText().length()));
         vibrator.vibrate(pitter, -1);
 
     }
