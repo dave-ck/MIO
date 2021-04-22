@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -160,5 +161,7 @@ public class ABCPracticeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void showKeyboard(View view) {
+        showKeyboard();
+    }
 }

@@ -171,5 +171,7 @@ public class PracticeActivity extends AppCompatActivity {
         playPrompt();
     }
 
-
+    public void showKeyboard(View view) {
+        showKeyboard();
+    }
 }

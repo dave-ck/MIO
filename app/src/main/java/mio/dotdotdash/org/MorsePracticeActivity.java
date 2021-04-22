@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -145,6 +146,10 @@ public class MorsePracticeActivity extends AppCompatActivity {
     public void toLandingActivity() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);
+    }
+
+    public void showKeyboard(View view) {
+        showKeyboard();
     }
 
 }
