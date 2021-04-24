@@ -99,7 +99,6 @@ public class ABCPracticeActivity extends AppCompatActivity {
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
                     answerTextView.setTextColor(0xFF00FF00);
                     // TODO: don't vibrate "correct" - just vibrate next word
-                    vibrator.vibrate(mc.getJingle(1), -1);
                     current++;
                     nextPrompt();
                 } else if (!prompt.startsWith(s.toString())) {

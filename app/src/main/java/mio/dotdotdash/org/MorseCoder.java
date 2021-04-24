@@ -17,6 +17,7 @@ public class MorseCoder {
 
     private long[][] jingles;
     private HashMap<String, String> morseToText;
+    private HashMap<String, String> textToMorse;
 
     public MorseCoder() {
         // international morseFor code
@@ -26,6 +27,9 @@ public class MorseCoder {
         LETSEP = 600;          // space between letters is three units
         SPACE_EXTRA = 800;     // space character is seven units (four more than the space between characters)
         ZERO = 0;
+
+        // As py dict for formatting: {'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..', ':': '---...', "'": '.----.', '-': '-....-', '/': '-..-.', '(': '-.--.', ')': '-.--.-', '"': '.-..-.', '=': '-...-', '#': '........', '+': '.-.-.', '@': '.--.-.'}
+        // ABOVE IS MISSING SPACE
 
         charVibe = new long[][]{ // time on, time off, time on, ..., time off, time on; always start & end with time ON
                 {DOT, AND, DASH},            // A, AND,  index 0
@@ -74,6 +78,58 @@ public class MorseCoder {
                 {300, 75, 75, 75, 75, 75, 75, 75, 75}          // 0: RIGHT - many (4) quick 75ms vibrations
         };
 
+        textToMorse = new HashMap<>();
+        textToMorse.put("A", ".-");
+        textToMorse.put("B", "-...");
+        textToMorse.put("C", "-.-.");
+        textToMorse.put("D", "-..");
+        textToMorse.put("E", ".");
+        textToMorse.put("F", "..-.");
+        textToMorse.put("G", "--.");
+        textToMorse.put("H", "....");
+        textToMorse.put("I", "..");
+        textToMorse.put("J", ".---");
+        textToMorse.put("K", "-.-");
+        textToMorse.put("L", ".-..");
+        textToMorse.put("M", "--");
+        textToMorse.put("N", "-.");
+        textToMorse.put("O", "---");
+        textToMorse.put("P", ".--.");
+        textToMorse.put("Q", "--.-");
+        textToMorse.put("R", ".-.");
+        textToMorse.put("S", "...");
+        textToMorse.put("T", "-");
+        textToMorse.put("U", "..-");
+        textToMorse.put("V", "...-");
+        textToMorse.put("W", ".--");
+        textToMorse.put("X", "-..-");
+        textToMorse.put("Y", "-.--");
+        textToMorse.put("Z", "--..");
+        textToMorse.put("0", "-----");
+        textToMorse.put("1", ".----");
+        textToMorse.put("2", "..---");
+        textToMorse.put("3", "...--");
+        textToMorse.put("4", "....-");
+        textToMorse.put("5", ".....");
+        textToMorse.put("6", "-....");
+        textToMorse.put("7", "--...");
+        textToMorse.put("8", "---..");
+        textToMorse.put("9", "----.");
+        textToMorse.put(".", ".-.-.-");
+        textToMorse.put(",", "--..--");
+        textToMorse.put("?", "..--..");
+        textToMorse.put(":", "---...");
+        textToMorse.put("'", ".----.");
+        textToMorse.put("-", "-....-");
+        textToMorse.put("/", "-..-.");
+        textToMorse.put("(", "-.--.");
+        textToMorse.put(")", "-.--.-");
+        textToMorse.put("\"", ".-..-.");
+        textToMorse.put("=", "-...-");
+        textToMorse.put("#", "........");
+        textToMorse.put("+", ".-.-.");
+        textToMorse.put("@", ".--.-.");
+
         morseToText = new HashMap<>();
         morseToText.put("", "");
         morseToText.put(".-", "A");
@@ -102,6 +158,7 @@ public class MorseCoder {
         morseToText.put("-..-", "X");
         morseToText.put("-.--", "Y");
         morseToText.put("--..", "Z");
+        morseToText.put("-----", "0");
         morseToText.put(".----", "1");
         morseToText.put("..---", "2");
         morseToText.put("...--", "3");
@@ -111,8 +168,20 @@ public class MorseCoder {
         morseToText.put("--...", "7");
         morseToText.put("---..", "8");
         morseToText.put("----.", "9");
-        morseToText.put("-----", "0");
+        morseToText.put(".-.-.-", ".");
+        morseToText.put("--..--", ",");
+        morseToText.put("..--..", "?");
+        morseToText.put("---...", ":");
+        morseToText.put(".----.", "'");
+        morseToText.put("-....-", "-");
+        morseToText.put("-..-.", "/");
+        morseToText.put("-.--.", "(");
+        morseToText.put("-.--.-", ")");
+        morseToText.put(".-..-.", "\"");
+        morseToText.put("-...-", "=");
         morseToText.put("........", "#");
+        morseToText.put(".-.-.", "+");
+        morseToText.put(".--.-.", "@");
     }
 
     public long[] playableSeq(String in) {
@@ -182,35 +251,20 @@ public class MorseCoder {
     }
 
     public long[] morseFromChar(char c) {
-        if (c <= 123 & c >= 97) { // lowercase letter
-            return charVibe[(c - 97)];
-        } else if (c <= 90 & c >= 65) { // upper letter
-            return charVibe[(c - 65)];
-        } else if (c <= 57 & c >= 48) { // number character
-            return charVibe[(c - 22)]; // -48 + 26
-        } else if (c == 32) { // space character
-            return charVibe[37];
-        } else if (c <= 234 & c >= 232) { // accented e
-            return charVibe[36];
-        } else { // other character - ERROR code ........ (8 dots) (automatically catches '#' char)
-            return charVibe[38];
-        }
-
-    }
-
-    public String fromMorse(String in) {
-        StringBuilder out = new StringBuilder();
-        StringBuilder current = new StringBuilder();
-        for (int i = 0; i < in.length(); i++) {
-            String sym = in.substring(i, i + 1);
-            if (sym.equals(" ")) {
-                out.append(morseLookup(current.toString()));
-                current = new StringBuilder();
-            } else {
-                current.append(sym);
+        String encoding = textToMorse.get(String.valueOf(c));
+        long[] vibe = new long[encoding.length() * 2 - 1];
+        for (int i = 0; i < encoding.length(); i++) {
+            if (encoding.charAt(i)=='.') {
+                vibe[i*2] = DOT;
+            }
+            else {
+                vibe[i*2] = DASH;
+            }
+            if (i*2+1 < vibe.length){
+                vibe[i*2+1] = AND;
             }
         }
-        return out.toString();
+        return vibe;
     }
 
     public String morseLookup(String in) {
@@ -219,14 +273,5 @@ public class MorseCoder {
             return "#"; // error is 8 dots under ITU M.1677-1 https://www.itu.int/rec/R-REC-M.1677-1-200910-I/
     }
 
-    /**
-     * @param id - the id of the desired jingle:
-     *           0 for WRONG,
-     *           1 for RIGHT/CORRECT
-     * @return A long[] starting with the pause length - can be fed directly to Vibrator.vibrate(long[] pattern, int repeat)
-     */
-    public long[] getJingle(int id) {
-        return jingles[id];
-    }
 
 }

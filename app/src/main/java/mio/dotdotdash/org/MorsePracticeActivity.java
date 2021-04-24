@@ -85,7 +85,6 @@ public class MorsePracticeActivity extends AppCompatActivity {
                     String mockEntry = "@experiment: " + System.currentTimeMillis() + ": finished prompt \"" + prompt + "\" successfully\n";
                     FileAccess.appendToFile(getApplicationContext(), LOGS_FILENAME, mockEntry);
                     answerTextView.setTextColor(0xFF00FF00);
-                    vibrator.vibrate(mc.getJingle(1), -1);
                     current++;
                     nextPrompt();
                 } else if (!prompt.startsWith(s.toString())) {
