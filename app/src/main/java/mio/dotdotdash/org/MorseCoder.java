@@ -186,8 +186,8 @@ public class MorseCoder {
 
     public long[] playableSeq(String in) {
         in = in.toUpperCase();
-        in.replaceAll("\n", "  ");
-        in.replaceAll("[^A-Z0-9() \":;\\?\\.,'@+=#-]", "#");
+        in = in.replaceAll("\n", "  ");
+        in = in.replaceAll("[^A-Z0-9() \":;\\?\\.,'@+=#-]", "#");
         Scanner sc = new Scanner(in);
         String next;
         ArrayList<Long> seq = new ArrayList<>();
