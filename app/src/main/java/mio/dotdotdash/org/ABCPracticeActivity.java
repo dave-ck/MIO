@@ -123,7 +123,9 @@ public class ABCPracticeActivity extends AppCompatActivity {
     }
 
     public void showKeyboard() {
-        UIUtil.showKeyboard(this, typedEditText);
+        typedEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(typedEditText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public void hideKeyboard() {

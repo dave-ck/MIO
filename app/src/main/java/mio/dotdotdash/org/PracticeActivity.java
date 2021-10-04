@@ -114,8 +114,9 @@ public class PracticeActivity extends AppCompatActivity {
     }
 
     public void showKeyboard() {
-        UIUtil.showKeyboard(this, typedEditText);
-//        Toast.makeText(this, "Open cheese is best", Toast.LENGTH_SHORT).show();
+        typedEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(typedEditText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
