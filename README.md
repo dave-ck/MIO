@@ -3,7 +3,7 @@ Basic Vibrotactile Morse I/O
 
 Code for the application used in evaluating Morse Input/Output, as presented at IEEE Haptics 2022. 
 
-Video link: \[soon\]
+Video link: https://youtu.be/rSwz-pJVUjU
 
 Paper link: \[soon\]
 
