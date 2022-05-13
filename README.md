@@ -1,7 +1,7 @@
 # MIO
 Basic Vibrotactile Morse I/O
 
-Code for the application used in evaluating Morse Input/Output, as presented at IEEE Haptics 2022. 
+Code for the application used in evaluating Morse Input/Output, as presented at the IEEE Haptics Symposium 2022 and at EuroHaptics 2022. 
 
 Video link: https://youtu.be/rSwz-pJVUjU
 
