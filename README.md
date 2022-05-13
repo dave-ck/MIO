@@ -5,7 +5,7 @@ Code for the application used in evaluating Morse Input/Output, as presented at 
 
 Video link: https://youtu.be/rSwz-pJVUjU
 
-Paper link: \[soon\]
+Paper link: https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9765570
 
 # Install
 Open in Android Studio and build the .apk or download from this link (usually updated at the same time as this repository): https://drive.google.com/file/d/1f7QqyEGvT4Q1xrsG4yQtSzLFBmhxsg8L/view?usp=sharing.
